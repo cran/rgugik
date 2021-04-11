@@ -2,8 +2,7 @@
 % Please edit documentation in R/geocodePL_get.R
 \name{geocodePL_get}
 \alias{geocodePL_get}
-\title{returns a sf data.frame with metadata for a given type of input
-(geocoding addresses and objects)}
+\title{Convert addresses and objects to geographic coordinates}
 \usage{
 geocodePL_get(
   address = NULL,
@@ -27,8 +26,7 @@ of Geographical Names (function \code{\link[=geonames_download]{geonames_downloa
 a sf data.frame (EPSG: 2180) with metadata
 }
 \description{
-returns a sf data.frame with metadata for a given type of input
-(geocoding addresses and objects)
+Convert addresses and objects to geographic coordinates
 }
 \examples{
 \dontrun{

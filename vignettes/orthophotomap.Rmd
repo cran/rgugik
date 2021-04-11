@@ -17,7 +17,7 @@ body {text-align: justify}
 ## Definition
 
 **Orthophotomap** is a raster, orthogonal and cartometric representation of the terrain surface created by digital processing of aerial or satellite images.
-During the orthorectification, geometric distortions resulting from the land relief are removed by using Digital Elevation Models (DEM).
+During the orthorectification, geometric distortions resulting from the land relief are removed by using digital elevation models (DEM).
 An orthophotomap is georeferenced, and therefore, allows to determine geographic coordinates for each of its cells.
 
 Orthophotomaps' properties:
@@ -65,6 +65,13 @@ Let's do that.
 ```r
 # 17.6 MB
 geodb_download("wielkopolskie", outdir = "./data")
+```
+
+If you run into any problem with the download, remember that you can pass another download method from `download.file()` as a function argument.
+
+
+```r
+geodb_download(req_df, outdir = "./data", method = "wget")
 ```
 
 The downloaded database consists of many files in the GML (*Geography Markup Language*) format.
@@ -128,12 +135,12 @@ The `st_area()` function returned the area in m^2, and after the conversion we g
 ### Raster data
 
 Now let's move on to the stage of downloading the orthophotomap.
-We use the `orto_request()` function that show us which images are available for the analyzed area.
+We use the `ortho_request()` function that show us which images are available for the analyzed area.
 We need to provide our Krajkowo polygon as the argument of this function.
 
 
 ```r
-req_df = orto_request(krajkowo)
+req_df = ortho_request(krajkowo)
 ```
 
 We can display the resulting table using the code below.

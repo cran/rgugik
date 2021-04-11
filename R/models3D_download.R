@@ -1,4 +1,4 @@
-#' downloads 3D models of buildings for counties
+#' @title Download 3D models of buildings for counties
 #'
 #' @param county county name in Polish. Check [`county_names()`] function.
 #' @param TERYT county ID (4 characters)
@@ -78,6 +78,7 @@ models3D_download = function(county = NULL, TERYT = NULL, LOD = "LOD1",
     status = tryGet(utils::download.file(prepared_URL, filename, mode = "wb", ...))
 
     if (any(status %in% c("error", "warning"))) {
+      err_print()
       return("connection error")
     }
 

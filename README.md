@@ -11,6 +11,7 @@ status](https://github.com/kadyb/rgugik/workflows/rcmdcheck/badge.svg)](https://
 [![codecov](https://codecov.io/gh/kadyb/rgugik/branch/master/graph/badge.svg)](https://codecov.io/gh/kadyb/rgugik)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02948/status.svg)](https://doi.org/10.21105/joss.02948)
 <!-- badges: end -->
 
 **rgugik** is an R package for downloading open data from resources of
@@ -31,13 +32,13 @@ including:
 -   Location (geometry) of cadastral parcels using TERYT (parcel ID) or
     coordinates
 -   3D models of buildings (LOD1, LOD2)
--   Various Digital Elevation Models as:
-    -   [Digital Terrain
-        Model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-terenu)
-    -   [Digital Surface
-        Model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-pokrycia-terenu)
+-   Various digital elevation models as:
+    -   [Digital terrain
+        model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-terenu)
+    -   [Digital surface
+        model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-pokrycia-terenu)
     -   [Point
-        Cloud](http://www.gugik.gov.pl/pzgik/zamow-dane/dane-pomiarowe)
+        cloud](http://www.gugik.gov.pl/pzgik/zamow-dane/dane-pomiarowe)
 
 It is also possible to geocode addresses or objects using the
 `geocodePL_get()` function.
@@ -46,7 +47,7 @@ It is also possible to geocode addresses or objects using the
 
 | Function                              | Input                  | Dastaset EN                              | Dataset PL                                |
 |:--------------------------------------|:-----------------------|:-----------------------------------------|:------------------------------------------|
-| `orto_request()`, `tile_download()`   | polygon                | Orthophotomap                            | Ortofotomapa                              |
+| `ortho_request()`, `tile_download()`  | geometry               | Orthophotomap                            | Ortofotomapa                              |
 | `geodb_download()`                    | voivodeship            | General Geographic Database              | Baza Danych Obiektów Ogólnogeograficznych |
 | `topodb_download()`                   | county                 | Topographic Database                     | Baza Danych Obiektów Topograficznych      |
 | `emuia_download()`                    | commune                | Register of Towns, Streets and Addresses | Ewidencja Miejscowości, Ulic i Adresów    |
@@ -54,9 +55,9 @@ It is also possible to geocode addresses or objects using the
 | `borders_get()`, `borders_download()` | type                   | State Register of Borders                | Państwowy Rejestr Granic                  |
 | `parcel_get()`                        | parcel ID, coordinates | Location of cadastral parcels            | Lokalizacja działek katastralnych         |
 | `models3D_download()`                 | county                 | 3D models of buildings                   | Modele 3D budynków                        |
-| `DEM_request()`, `tile_download()`    | polygon                | Digital Elevation Models                 | Cyfrowe Modele Wysokościowe               |
+| `DEM_request()`, `tile_download()`    | geometry               | Digital elevation models                 | Cyfrowe modele wysokościowe               |
 
-There are the additional functions for obtaining Digital Terrain Model:
+There are the additional functions for obtaining digital terrain model:
 
 -   `pointDTM_get()` for small areas (high resolution grid)
 -   `pointDTM100_download()` for voivodeships areas (low resolution
@@ -90,12 +91,12 @@ remotes::install_github("kadyb/rgugik")
 
 ## Usage
 
-### Ortophotomap
+### Orthophotomap
 
--   `orto_request()` - returns a data frame with metadata and links to
-    the orthoimages in a given polygon
+-   `ortho_request()` - returns a data frame with metadata and links to
+    the orthoimages for a given geometry (point, line or polygon)
 -   `tile_download()` - downloads orthoimages based on the data frame
-    obtained using the `orto_request()` function
+    obtained using the `ortho_request()` function
 
 ``` r
 library(rgugik)
@@ -105,11 +106,14 @@ library(raster)
 polygon_path = system.file("datasets/search_area.gpkg", package = "rgugik")
 polygon = read_sf(polygon_path)
 
-req_df = orto_request(polygon)
+req_df = ortho_request(polygon)
 
-# print metadata of the first image
-t(req_df[1, ])
-#>             1                                                                               
+# select the oldest image
+req_df = req_df[req_df$year == 2001, ]
+
+# print metadata
+t(req_df)
+#>             3                                                                               
 #> sheetID     "N-33-130-D-b-2-3"                                                              
 #> year        "2001"                                                                          
 #> resolution  "1"                                                                             
@@ -123,8 +127,8 @@ t(req_df[1, ])
 #> date        "2001-01-01"                                                                    
 #> filename    "41_3756_N-33-130-D-b-2-3"
 
-# download first image
-tile_download(req_df[1, ])
+# download image
+tile_download(req_df)
 #> 1/1
 
 img = brick("41_3756_N-33-130-D-b-2-3.tif")
@@ -147,6 +151,17 @@ plot(st_geometry(counties_geom), main = "Opolskie")
 ```
 
 <img src="man/figures/README-f2-1.png" width="100%" />
+
+### Vignettes
+
+More advanced examples of the practical (step by step) use of this
+package can be found in the vignettes:
+
+-   [Orthophotomap](https://kadyb.github.io/rgugik/articles/orthophotomap.html)
+-   [Digital elevation
+    model](https://kadyb.github.io/rgugik/articles/DEM.html)
+-   [Topographic
+    Database](https://kadyb.github.io/rgugik/articles/topodb.html)
 
 ## Acknowledgment
 
@@ -171,6 +186,15 @@ document.
 
 Maintainers and contributors must follow this repository’s [CODE OF
 CONDUCT](https://github.com/kadyb/rgugik/blob/master/CODE_OF_CONDUCT.md).
+
+## Citation
+
+To cite **rgugik** in publications, please use the following
+[article](https://doi.org/10.21105/joss.02948):
+
+    Dyba, K. and Nowosad, J. (2021). rgugik: Search and Retrieve Spatial Data from the Polish Head Office of Geodesy and Cartography in R. Journal of Open Source Software, 6(59), 2948, https://doi.org/10.21105/joss.02948
+
+BibTeX version can be obtained with `citation("rgugik")`.
 
 ## Related projects
 

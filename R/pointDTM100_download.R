@@ -1,4 +1,4 @@
-#' downloads Digital Terrain Models with 100 m resolution for entire voivodeships
+#' @title Download digital terrain models for voivodeships (100 m resolution)
 #'
 #' @param voivodeships selected voivodeships in Polish or English, or TERC
 #' (function [`voivodeship_names()`] can by helpful)
@@ -53,7 +53,7 @@ pointDTM100_download = function(voivodeships, outdir = ".", unzip = TRUE, ...) {
   df_names$NAME_PL = iconv(df_names$NAME_PL, "WINDOWS-1250", "ASCII//TRANSLIT")
   URLs = paste0("ftp://91.223.135.109/nmt/", df_names$NAME_PL, "_grid100.zip")
 
-  df_names = cbind(df_names, URL = URLs)
+  df_names = cbind(df_names, URL = URLs, stringsAsFactors = FALSE)
 
   df_names = df_names[sel_vector, ]
 
@@ -64,6 +64,7 @@ pointDTM100_download = function(voivodeships, outdir = ".", unzip = TRUE, ...) {
     status = tryGet(utils::download.file(df_names[i, "URL"], filename, mode = "wb", ...))
 
     if (any(status %in% c("error", "warning"))) {
+      err_print()
       return("connection error")
     }
 

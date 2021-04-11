@@ -1,4 +1,4 @@
-#' downloads Register of Towns, Streets and Addresses for communes
+#' @title Download Register of Towns, Streets and Addresses for communes
 #'
 #' @param commune commune name in Polish. Check [`commune_names()`] function.
 #' @param TERYT county ID (7 characters)
@@ -52,7 +52,7 @@ emuia_download = function(commune = NULL, TERYT = NULL, outdir = ".",
   URLs = paste0("https://integracja.gugik.gov.pl/PRG/pobierz.php?teryt=",
                 df_names$TERYT, "&adresy")
 
-  df_names = cbind(df_names, URL = URLs)
+  df_names = cbind(df_names, URL = URLs, stringsAsFactors = FALSE)
 
   if (!dir.exists(outdir)) dir.create(outdir)
 
@@ -61,6 +61,7 @@ emuia_download = function(commune = NULL, TERYT = NULL, outdir = ".",
     status = tryGet(utils::download.file(df_names[i, "URL"], filename, mode = "wb", ...))
 
     if (any(status %in% c("error", "warning"))) {
+      err_print()
       return("connection error")
     }
 

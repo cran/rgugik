@@ -1,4 +1,4 @@
-#' downloads State Register of Borders
+#' @title Download State Register of Borders
 #'
 #' @param type "administrative units", "special units" or "addresses"
 #' @param outdir (optional) name of the output directory;
@@ -44,6 +44,7 @@ borders_download = function(type, outdir = ".", unzip = TRUE, ...) {
   status = tryGet(utils::download.file(URL, filename, mode = "wb", ...))
 
   if (any(status %in% c("error", "warning"))) {
+    err_print()
     return("connection error")
   }
 

@@ -1,4 +1,4 @@
-#' downloads General Geographic Databases for entire voivodeships
+#' @title Download General Geographic Databases for entire voivodeships
 #'
 #' @param voivodeships selected voivodeships in Polish or English, or TERC
 #' (object [`voivodeship_names`] can by helpful)
@@ -62,7 +62,7 @@ geodb_download = function(voivodeships, outdir = ".", unzip = TRUE, ...) {
   URLs = paste0("http://opendata.geoportal.gov.pl/bdoo/PL.PZGiK.201.",
                 df_names$TERC, ".zip")
 
-  df_names = cbind(df_names, URL = URLs)
+  df_names = cbind(df_names, URL = URLs, stringsAsFactors = FALSE)
 
   df_names = df_names[sel_vector, ]
 
@@ -73,6 +73,7 @@ geodb_download = function(voivodeships, outdir = ".", unzip = TRUE, ...) {
     status = tryGet(utils::download.file(df_names[i, "URL"], filename, mode = "wb", ...))
 
     if (any(status %in% c("error", "warning"))) {
+      err_print()
       return("connection error")
     }
 

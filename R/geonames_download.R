@@ -1,4 +1,4 @@
-#' downloads State Register of Geographical Names
+#' @title Download State Register of Geographical Names
 #'
 #' @param type names of places ("place") and/or physiographic objects ("object")
 #' @param format data format ("GML", "SHP" (default) and/or "XLSX")
@@ -54,6 +54,7 @@ geonames_download = function(type, format = "SHP", outdir = ".", unzip = TRUE, .
     status = tryGet(utils::download.file(df[i, "URL"], filename, mode = "wb", ...))
 
     if (any(status %in% c("error", "warning"))) {
+      err_print()
       return("connection error")
     }
 
