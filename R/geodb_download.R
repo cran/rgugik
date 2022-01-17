@@ -17,7 +17,7 @@
 #' @references
 #' description of topographical and general geographical databases,
 #' and technical standards for making maps (in Polish):
-#' \url{http://www.gugik.gov.pl/__data/assets/pdf_file/0005/208661/rozp_BDOT10k_BDOO.pdf}
+#' \url{https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210001412/O/D20211412.pdf}
 #'
 #' brief description of categories and layer names (in English and Polish):
 #' \url{https://kadyb.github.io/rgugik/articles/articles/spatialdb_description.html}
@@ -74,7 +74,7 @@ geodb_download = function(voivodeships, outdir = ".", unzip = TRUE, ...) {
 
     if (any(status %in% c("error", "warning"))) {
       err_print()
-      return("connection error")
+      return(invisible("connection error"))
     }
 
     if (unzip) {

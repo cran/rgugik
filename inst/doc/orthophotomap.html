@@ -27,11 +27,19 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -168,7 +176,7 @@ body {text-align: justify}
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geodb_download</span>(<span class="st">&quot;wielkopolskie&quot;</span>, <span class="at">outdir =</span> <span class="st">&quot;./data&quot;</span>)</span></code></pre></div>
 <p>If you run into any problem with the download, remember that you can pass another download method from <code>download.file()</code> as a function argument.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geodb_download</span>(req_df, <span class="at">outdir =</span> <span class="st">&quot;./data&quot;</span>, <span class="at">method =</span> <span class="st">&quot;wget&quot;</span>)</span></code></pre></div>
-<p>The downloaded database consists of many files in the GML (<em>Geography Markup Language</em>) format. A brief description of the structure of this database can be found <a href="https://kadyb.github.io/rgugik/articles/articles/spatialdb_description.html">here</a>. The table with the nature reserves is in the &quot;PL.PZGIK.201.30__OT_TCRZ_A.xml&quot; file. We can use the <strong>sf</strong> package and its <code>read_sf()</code> function to load it.</p>
+<p>The downloaded database consists of many files in the GML (<em>Geography Markup Language</em>) format. A brief description of the structure of this database can be found <a href="https://kadyb.github.io/rgugik/articles/articles/spatialdb_description.html">here</a>. The table with the nature reserves is in the “PL.PZGIK.201.30__OT_TCRZ_A.xml” file. We can use the <strong>sf</strong> package and its <code>read_sf()</code> function to load it.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>reserves <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">&quot;data/PL.PZGiK.201.30/BDOO/PL.PZGIK.201.30__OT_TCRZ_A.xml&quot;</span>)</span></code></pre></div>
 <p>Let’s check the structure of our data.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(reserves)</span>

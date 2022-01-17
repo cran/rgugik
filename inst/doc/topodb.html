@@ -27,11 +27,19 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -165,7 +173,7 @@ body {text-align: justify}
 <p>If you run into any problem with the download, remember that you can pass another download method from <code>download.file()</code> as a function argument.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topodb_download</span>(req_df, <span class="at">outdir =</span> <span class="st">&quot;./data&quot;</span>, <span class="at">method =</span> <span class="st">&quot;wget&quot;</span>)</span></code></pre></div>
 <p>The downloaded database consists of many files in the <em>GML</em> format. All the data necessary for analyzes can be found in the <code>data/PL.PZGiK.332.1801/BDOT10k/</code> location. A brief description of the structure of this database can be found <a href="https://kadyb.github.io/rgugik/articles/articles/spatialdb_description.html">here</a>.</p>
-<p>First, let’s load the file with administrative units (&quot;PL.PZGiK.332.1801__OT_ADJA_A.xml&quot;) using the <strong>sf</strong> package and its <code>read_sf()</code> function.</p>
+<p>First, let’s load the file with administrative units (“PL.PZGiK.332.1801__OT_ADJA_A.xml”) using the <strong>sf</strong> package and its <code>read_sf()</code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>territory <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">&quot;data/PL.PZGiK.332.1801/BDOT10k/PL.PZGiK.332.1801__OT_ADJA_A.xml&quot;</span>)</span></code></pre></div>
 <p>The file contains administrative units at various levels, let’s choose the lowest level, i.e. communes. There are three types of communes in this dataset, specified in the <code>rodzaj</code> column: urban (<em>GM</em>), rural (<em>GW</em>), and urban-rural (<em>Gmw</em>). Let’s select them.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>communes <span class="ot">=</span> territory[territory<span class="sc">$</span>rodzaj <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GM&quot;</span>, <span class="st">&quot;GW&quot;</span>, <span class="st">&quot;Gmw&quot;</span>), <span class="st">&quot;rodzaj&quot;</span>]</span>
@@ -179,7 +187,7 @@ body {text-align: justify}
 </div>
 <div id="lengths-and-categories-of-roads" class="section level3">
 <h3>Lengths and categories of roads</h3>
-<p>In the first task, we calculate the lengths of roads, taking into account their categories. Road data can be found in the &quot;PL.PZGiK.332.1801__OT_SKDR_L.xml&quot; file.</p>
+<p>In the first task, we calculate the lengths of roads, taking into account their categories. Road data can be found in the “PL.PZGiK.332.1801__OT_SKDR_L.xml” file.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">&quot;data/PL.PZGiK.332.1801/BDOT10k/PL.PZGiK.332.1801__OT_SKDR_L.xml&quot;</span>)</span></code></pre></div>
 <p>Let’s plot them. We use the <code>plot()</code> function again, but this time we combine the two layers into one image. The first layer (in the background) contains roads and to add another layer, we have to set the argument <code>reset</code> to <code>&quot;FALSE&quot;</code>. Then we can add a second layer with the territory borders by setting the <code>add</code> argument to <code>&quot;TRUE&quot;</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roads[<span class="st">&quot;katZarzadzania&quot;</span>], <span class="at">main =</span> <span class="st">&quot;Road category&quot;</span>, <span class="at">reset =</span> <span class="cn">FALSE</span>)</span>
@@ -221,7 +229,7 @@ body {text-align: justify}
 </div>
 <div id="roads-through-the-rivers" class="section level3">
 <h3>Roads through the rivers</h3>
-<p>Another dataset included in the Topographic Database contains rivers for this area (&quot;PL.PZGiK.332.1801__OT_SWRS_L.xml&quot;).</p>
+<p>Another dataset included in the Topographic Database contains rivers for this area (“PL.PZGiK.332.1801__OT_SWRS_L.xml”).</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rivers <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">&quot;data/PL.PZGiK.332.1801/BDOT10k/PL.PZGiK.332.1801__OT_SWRS_L.xml&quot;</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>rivers <span class="ot">=</span> rivers[rivers<span class="sc">$</span>rodzaj <span class="sc">==</span> <span class="st">&quot;Rz&quot;</span>, ] <span class="co"># select only rivers</span></span></code></pre></div>
 <p>Rivers are divided into smaller sections with different parameters, such as river width or data source. Let’s merge sections from the same rivers into a single feature (geometry) - we can use the attribute with an ID (<code>idMPHP</code>) for that purpose. We can also give each river a category number by creating a sequence from 1 to n using the <code>seq_len</code> function.</p>
@@ -266,7 +274,7 @@ body {text-align: justify}
 ## [10] &quot;PL.PZGiK.332.1801__OT_PTWP_A.xml&quot;
 ## [11] &quot;PL.PZGiK.332.1801__OT_PTWZ_A.xml&quot;
 ## [12] &quot;PL.PZGiK.332.1801__OT_PTZB_A.xml&quot;</code></pre>
-<p>We also can exclude &quot;PL.PZGiK.332.1801__OT_PTSO_A.xml&quot; file from the list, because this file contains zero objects (features).</p>
+<p>We also can exclude “PL.PZGiK.332.1801__OT_PTSO_A.xml” file from the list, because this file contains zero objects (features).</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop &quot;OT_PTSO_A.xml&quot;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">=</span> files[<span class="sc">-</span><span class="dv">7</span>]</span></code></pre></div>
 <p>Let’s prepare the names of the objects to which the data will be loaded. The following names are the extended names of the abbreviations stored in the filenames.</p>
@@ -313,7 +321,7 @@ body {text-align: justify}
 </div>
 <div id="buffer" class="section level3">
 <h3>Buffer</h3>
-<p>In the last analysis in this vignette, we want to check how many buildings have bus stops within a given distance. We can apply spatial buffers to solve this question. Information about bus stops is in the &quot;PL.PZGiK.332.1801__OT_OIKM_P.xml&quot; file, where they are represented by the <em>OIKM04</em> value of the <code>x_kod</code> attribute.</p>
+<p>In the last analysis in this vignette, we want to check how many buildings have bus stops within a given distance. We can apply spatial buffers to solve this question. Information about bus stops is in the “PL.PZGiK.332.1801__OT_OIKM_P.xml” file, where they are represented by the <em>OIKM04</em> value of the <code>x_kod</code> attribute.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>bus_stop <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">&quot;data/PL.PZGiK.332.1801/BDOT10k/PL.PZGiK.332.1801__OT_OIKM_P.xml&quot;</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>bus_stop <span class="ot">=</span> bus_stop[bus_stop<span class="sc">$</span>x_kod <span class="sc">==</span> <span class="st">&quot;OIKM04&quot;</span>, ]</span></code></pre></div>
 <p>Let’s prepare a visualization in which the bus stops are marked with blue dots and the buildings are presented as red polygons.</p>
