@@ -18,27 +18,27 @@ MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/
 [Polish Head Office of Geodesy and
 Cartography](https://www.gov.pl/web/gugik) including:
 
--   [Orthophotomaps](http://www.gugik.gov.pl/pzgik/zamow-dane/ortofotomapa)
+-   [Orthophotomaps](https://www.geoportal.gov.pl/dane/ortofotomapa)
 -   [General Geographic
-    Database](http://www.gugik.gov.pl/pzgik/zamow-dane/baza-danych-obiektow-ogolnogeograficznych)
+    Database](https://www.geoportal.gov.pl/dane/baza-danych-ogolnogeograficznych-bdo)
 -   [Topographic
-    Database](http://www.gugik.gov.pl/pzgik/zamow-dane/baza-danych-obiektow-topograficznych-bdot-10k)
+    Database](https://www.geoportal.gov.pl/dane/baza-danych-obiektow-topograficznych-bdot)
 -   [Register of Towns, Streets and
     Addresses](https://emuia.gugik.gov.pl)
 -   [State Register of Geographical
     Names](https://www.geoportal.gov.pl/dane/panstwowy-rejestr-nazw-geograficznych)
 -   [State Register of
-    Borders](http://www.gugik.gov.pl/pzgik/zamow-dane/panstwowy-rejestr-granic-i-powierzchni-jednostek-podzialow-terytorialnych-kraju)
+    Borders](https://www.geoportal.gov.pl/dane/panstwowy-rejestr-granic)
 -   Location (geometry) of cadastral parcels using TERYT (parcel ID) or
     coordinates
 -   3D models of buildings (LOD1, LOD2)
 -   Various digital elevation models as:
     -   [Digital terrain
-        model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-terenu)
+        model](https://www.geoportal.gov.pl/dane/numeryczny-model-terenu)
     -   [Digital surface
-        model](http://www.gugik.gov.pl/pzgik/zamow-dane/numeryczny-model-pokrycia-terenu)
+        model](https://www.geoportal.gov.pl/dane/numeryczny-model-pokrycia-terenu)
     -   [Point
-        cloud](http://www.gugik.gov.pl/pzgik/zamow-dane/dane-pomiarowe)
+        cloud](https://www.geoportal.gov.pl/dane/dane-pomiarowe-lidar)
 
 It is also possible to geocode addresses or objects using the
 `geocodePL_get()` function.
@@ -101,7 +101,7 @@ remotes::install_github("kadyb/rgugik")
 ``` r
 library(rgugik)
 library(sf)
-library(raster)
+library(stars)
 
 polygon_path = system.file("datasets/search_area.gpkg", package = "rgugik")
 polygon = read_sf(polygon_path)
@@ -131,8 +131,8 @@ t(req_df)
 tile_download(req_df)
 #> 1/1
 
-img = brick("41_3756_N-33-130-D-b-2-3.tif")
-plotRGB(img)
+img = read_stars("41_3756_N-33-130-D-b-2-3.tif")
+plot(st_rgb(img), main = NULL)
 ```
 
 <img src="man/figures/README-f1-1.png" width="100%" />
