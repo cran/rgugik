@@ -1,5 +1,11 @@
 # rgugik development version
 
+# rgugik 0.4.1
+
+* The list of communes has been updated (as of 02 January 2024).
+
+* Update product names in `DEM_request()`.
+
 # rgugik 0.4.0
 
 * The `ortho_request()` and `DEM_request()` functions have been updated

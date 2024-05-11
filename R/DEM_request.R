@@ -7,6 +7,12 @@
 #' (different formats of digital terrain model, digital surface model and
 #' point clouds)
 #'
+#' @details
+#' The server can return a maximum of 1000 records in a single query.
+#' If your area of interest exceeds this limit, you can generate a grid of
+#' smaller polygons ([`sf::st_make_grid()`]) or a regular grid of points
+#' ([`sf::st_sample()`]).
+#'
 #' @seealso [`tile_download()`]
 #'
 #' @export
@@ -111,7 +117,7 @@ DEM_request = function(x) {
                          "CRS", "VRS", "date", "isFilled", "URL", "filename", "seriesID",
                          "source")
   empty_df$product = factor(empty_df$product,
-                            levels = c("Dane NMPT", "Dane NMT", "Dane pomiarowe NMT"),
+                            levels = c("NMPT", "NMT", "chmura punktow"),
                             labels = c("DSM", "DTM", "PointCloud"))
   empty_df$CRS = as.factor(empty_df$CRS)
   empty_df$VRS = as.factor(empty_df$VRS)
