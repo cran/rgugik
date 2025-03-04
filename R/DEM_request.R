@@ -41,7 +41,8 @@ DEM_request = function(x) {
 
   selected_cols = c("godlo", "akt_rok", "asortyment", "format", "char_przestrz",
                     "blad_sr_wys", "uklad_xy", "uklad_h", "akt_data", "czy_ark_wypelniony",
-                    "url_do_pobrania", "nazwa_pliku", "id_serie", "zr_danych")
+                    "url_do_pobrania", "nazwa_pliku", "id_serie", "zr_danych",
+                    "blad_sr_syt")
   selected_cols = paste(selected_cols, collapse = ",")
 
   # hard coded URL and parameters
@@ -63,7 +64,7 @@ DEM_request = function(x) {
                         #modul_arch = character(),
                         uklad_h = character(),
                         #nr_zglosz = character(),
-                        akt_data = numeric(),
+                        akt_data = character(),
                         czy_ark_wypelniony = character(),
                         #dane_aktualne = integer(),
                         #lok_nmt = character(),
@@ -73,6 +74,8 @@ DEM_request = function(x) {
                         #id_nmt = integer(),
                         id_serie = integer(),
                         zr_danych = character(),
+                        dt_pzgik = character(),
+                        blad_sr_syt = numeric(),
                         stringsAsFactors = FALSE
   )
 
@@ -115,7 +118,7 @@ DEM_request = function(x) {
   # postprocessing
   colnames(empty_df) = c("sheetID", "year", "product", "format", "resolution", "avgElevErr",
                          "CRS", "VRS", "date", "isFilled", "URL", "filename", "seriesID",
-                         "source")
+                         "source", "avgPlanarErr")
   empty_df$product = factor(empty_df$product,
                             levels = c("NMPT", "NMT", "chmura punktow"),
                             labels = c("DSM", "DTM", "PointCloud"))
@@ -126,6 +129,7 @@ DEM_request = function(x) {
   empty_df$source = factor(empty_df$source,
                            levels = c("Skaning laserowy", "Zdj. lotnicze"),
                            labels = c("Laser scanning", "Aerial photo"))
+  empty_df = empty_df[, c(1:4, 14, 5, 15, 6:13)] # reorder columns
 
   return(empty_df)
 }

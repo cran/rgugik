@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![CRAN](http://www.r-pkg.org/badges/version/rgugik)](https://cran.r-project.org/package=rgugik)
+[![CRAN](https://www.r-pkg.org/badges/version/rgugik)](https://cran.r-project.org/package=rgugik)
 [![R build
 status](https://github.com/kadyb/rgugik/workflows/rcmdcheck/badge.svg)](https://github.com/kadyb/rgugik/actions)
 [![codecov](https://codecov.io/gh/kadyb/rgugik/branch/master/graph/badge.svg)](https://app.codecov.io/gh/kadyb/rgugik)
@@ -28,6 +28,8 @@ Cartography](https://www.gov.pl/web/gugik) including:
   Names](https://www.geoportal.gov.pl/pl/dane/panstwowy-rejestr-nazw-geograficznych-prng/)
 - [State Register of
   Borders](https://www.geoportal.gov.pl/pl/dane/panstwowy-rejestr-granic-prg/)
+- [Land and Building
+  Registers](https://www.geoportal.gov.pl/pl/dane/ewidencja-gruntow-i-budynkow-egib/)
 - Location (geometry) of cadastral parcels using TERYT (parcel ID) or
   coordinates
 - 3D models of buildings (LOD1, LOD2)
@@ -44,17 +46,18 @@ It is also possible to geocode addresses or objects using the
 
 **Corresponding functions**
 
-| Function                              | Input                  | Dastaset EN                              | Dataset PL                                |
-|:--------------------------------------|:-----------------------|:-----------------------------------------|:------------------------------------------|
-| `ortho_request()`, `tile_download()`  | geometry               | Orthophotomap                            | Ortofotomapa                              |
-| `geodb_download()`                    | voivodeship            | General Geographic Database              | Baza Danych Obiektów Ogólnogeograficznych |
-| `topodb_download()`                   | county                 | Topographic Database                     | Baza Danych Obiektów Topograficznych      |
-| `emuia_download()`                    | commune                | Register of Towns, Streets and Addresses | Ewidencja Miejscowości, Ulic i Adresów    |
-| `geonames_download()`                 | type                   | State Register of Geographical Names     | Państwowy Rejestr Nazw Geograficznych     |
-| `borders_get()`, `borders_download()` | type                   | State Register of Borders                | Państwowy Rejestr Granic                  |
-| `parcel_get()`                        | parcel ID, coordinates | Location of cadastral parcels            | Lokalizacja działek katastralnych         |
-| `models3D_download()`                 | county                 | 3D models of buildings                   | Modele 3D budynków                        |
-| `DEM_request()`, `tile_download()`    | geometry               | Digital elevation models                 | Cyfrowe modele wysokościowe               |
+| Function | Input | Dastaset EN | Dataset PL |
+|:---|:---|:---|:---|
+| `ortho_request()`, `tile_download()` | geometry | Orthophotomap | Ortofotomapa |
+| `geodb_download()` | voivodeship | General Geographic Database | Baza Danych Obiektów Ogólnogeograficznych |
+| `topodb_download()` | county | Topographic Database | Baza Danych Obiektów Topograficznych |
+| `emuia_download()` | commune | Register of Towns, Streets and Addresses | Ewidencja Miejscowości, Ulic i Adresów |
+| `egib_download()` | county | Land and Building Register | Ewidencja Gruntów i Budynków |
+| `geonames_download()` | type | State Register of Geographical Names | Państwowy Rejestr Nazw Geograficznych |
+| `borders_get()`, `borders_download()` | type | State Register of Borders | Państwowy Rejestr Granic |
+| `parcel_get()` | parcel ID, coordinates | Location of cadastral parcels | Lokalizacja działek katastralnych |
+| `models3D_download()` | county | 3D models of buildings | Modele 3D budynków |
+| `DEM_request()`, `tile_download()` | geometry | Digital elevation models | Cyfrowe modele wysokościowe |
 
 There are the additional functions for obtaining digital terrain model:
 
@@ -111,7 +114,7 @@ req_df = req_df[req_df$year == 2001, ]
 
 # print metadata
 t(req_df)
-#>             23                                                                              
+#>             30                                                                              
 #> sheetID     "N-33-130-D-b-2-3"                                                              
 #> year        "2001"                                                                          
 #> resolution  "1"                                                                             
@@ -166,7 +169,7 @@ package can be found in the vignettes:
 Poland](https://www.gov.pl/web/gugik) is the main source of the provided
 data. The data is made available in accordance with the [Act of May 17,
 1989 Geodetic and Cartographic
-Law](http://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19890300163)
+Law](https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU19890300163)
 (amended on 16 April 2020).
 
 All datasets can be explored interactively using the
@@ -196,5 +199,5 @@ BibTeX version can be obtained with `citation("rgugik")`.
 ## Related projects
 
 If you don’t feel familiar with R, there is a similar
-[QGIS](https://www.qgis.org/en/site/) tool in the
+[QGIS](https://www.qgis.org/) tool in the
 [EnviroSolutions](https://github.com/envirosolutionspl) repository.
